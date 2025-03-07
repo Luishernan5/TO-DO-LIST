@@ -1,45 +1,35 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('todo-form');
-    const taskInput = document.getElementById('new-task');
-    const taskDateInput = document.getElementById('task-date');
-    const taskTimeInput = document.getElementById('task-time');
+document.getElementById('add-task-button').addEventListener('click', function() {
+    const taskInput = document.getElementById('task-input');
+    const datetimeInput = document.getElementById('datetime-input');
     const taskList = document.getElementById('task-list');
 
-    
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (taskInput.value.trim() !== '' && taskDateInput.value !== '' && taskTimeInput.value !== '') {
-            addTask(taskInput.value, taskDateInput.value, taskTimeInput.value);
-            taskInput.value = '';
-            taskDateInput.value = '';
-            taskTimeInput.value = '';
-        } else {
-            alert('Please fill in all fields.');
-        }
-    });
+    if (taskInput.value.trim() !== "" && datetimeInput.value !== "") {
+        const listItem = document.createElement('li');
+        listItem.className = 'task-item';
 
-    function addTask(task, date, time) {
-        const li = document.createElement('li');
-        const taskText = document.createElement('span');
-        taskText.textContent = task;
+        const taskDetails = document.createElement('div');
+        taskDetails.className = 'task-details';
+        const taskText = document.createElement('p');
+        taskText.textContent = taskInput.value;
         const taskDateTime = document.createElement('span');
-        taskDateTime.textContent = `${new Date(date).toLocaleDateString()} ${time}`;
-        taskDateTime.classList.add('time');
-
+        taskDateTime.className = 'task-date-time';
+        taskDateTime.textContent = new Date(datetimeInput.value).toLocaleString();
+        
+        taskDetails.appendChild(taskText);
+        taskDetails.appendChild(taskDateTime);
+        
         const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.addEventListener('click', () => {
-            li.remove();
+        deleteButton.textContent = 'Eliminar';
+        deleteButton.addEventListener('click', function() {
+            taskList.removeChild(listItem);
         });
 
-        li.appendChild(taskText);
-        li.appendChild(taskDateTime);
-        li.appendChild(deleteButton);
+        listItem.appendChild(taskDetails);
+        listItem.appendChild(deleteButton);
 
-        li.addEventListener('click', () => {
-            li.classList.toggle('completed');
-        });
+        taskList.appendChild(listItem);
 
-        taskList.appendChild(li);
+        taskInput.value = '';
+        datetimeInput.value = '';
     }
 });
