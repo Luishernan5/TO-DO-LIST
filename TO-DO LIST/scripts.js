@@ -14,10 +14,10 @@ document.getElementById('add-task-button').addEventListener('click', function() 
         const taskDateTime = document.createElement('span');
         taskDateTime.className = 'task-date-time';
         taskDateTime.textContent = new Date(datetimeInput.value).toLocaleString();
-        
+
         taskDetails.appendChild(taskText);
         taskDetails.appendChild(taskDateTime);
-        
+
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Eliminar';
         deleteButton.addEventListener('click', function() {
